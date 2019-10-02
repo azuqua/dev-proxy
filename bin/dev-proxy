@@ -47,7 +47,7 @@ function processPorts(val, acc) {
 
 program
   .version('2.2.0')
-  .option('-p --proxy <source:target>', 'ports to proxy', processPorts, [])
+  .option('-p --proxy <source:target>', 'ports to proxy. eg: --proxy remotehost:9000:9443 will cause https://localhost:9443/ to serve content from http://remotehost:9000/', processPorts, [])
   .option('-k --key [keyPath]', 'optional path to key file')
   .option('-c --cert [certPath]', 'optional path to cert file')
   .option('-h --host [hostname]', 'optional hostname')
