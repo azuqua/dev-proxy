@@ -7,8 +7,6 @@ var program = require("commander");
 var path = require("path");
 var assert = require("assert");
 
-let hostname;
-
 function getAbsolutePath(str) {
   return str && !path.isAbsolute(str)
     ? path.resolve(process.cwd(), str)
@@ -21,7 +19,7 @@ function processPorts(val, acc) {
   const obj = {
     localPort: 443,
     remotePort: null,
-    remoteHost: hostname,
+    remoteHost: 'localhost',
   };
 
   switch (vals.length) {
@@ -50,10 +48,8 @@ program
   .option('-p --proxy <source:target>', 'ports to proxy. eg: --proxy remotehost:9000:9443 will cause https://localhost:9443/ to serve content from http://remotehost:9000/', processPorts, [])
   .option('-k --key [keyPath]', 'optional path to key file')
   .option('-c --cert [certPath]', 'optional path to cert file')
-  .option('-h --host [hostname]', 'optional hostname')
   .parse(process.argv);
 
-hostname = program.host || 'localhost';
 var key = getAbsolutePath(program.key) || path.resolve(__dirname, '..', 'resources', 'localhost.key');
 var cert = getAbsolutePath(program.cert) || path.resolve(__dirname, '..', 'resources', 'localhost.cert');
 var proxies = program.proxy;
